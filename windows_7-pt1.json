@@ -1,0 +1,80 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "output_directory": "./output-{{user `os_name`}}-{{ user `image_name`}}/",
+      "vm_name": "{{user `os_name`}}-{{ user `image_name`}}",
+      "headless": "{{ user `headless` }}",
+      "boot_wait": "2m",
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "guest_os_type": "Windows7_64",
+      "disk_size": 61440,
+      "hard_drive_nonrotational": true,
+      "hard_drive_Discard": true,
+      "guest_additions_mode": "attach",
+      "floppy_files": [
+        "{{user `autounattend`}}",
+        "./scripts/dis-updates.ps1",
+        "./scripts/oracle-cert.cer"
+      ],
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "8192"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "4"
+        ]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+  "type": "powershell",
+  "script": "scripts/install_oracle_guest_additions.ps1",
+  "elevated_user": "vagrant",
+  "elevated_password": "vagrant",
+  "environment_vars": [
+    "install_vbox_tools=true"
+  ]
+},
+{
+      "type": "windows-shell",
+      "scripts": [
+        "./scripts/disable-auto-logon.bat",
+        "./scripts/enable-rdp.bat",
+        "./scripts/disable-rdp-allow-list.bat"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "windows_7_{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows_7.template"
+    }
+  ],
+  "variables": {
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
+    "iso_checksum_type": "md5",
+    "iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
+    "autounattend": "./answer_files/7-multipart/Autounattend.xml",
+    "os_name": "",
+    "headless": "true",
+    "source_path": "",
+    "image_name": "base"
+  }
+}
