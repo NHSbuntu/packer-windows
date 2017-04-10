@@ -33,62 +33,31 @@
         "type": "powershell",
         "elevated_user": "vagrant",
         "elevated_password": "vagrant",
-        "script": "scripts/hotfix-KB976932.ps1"
+        "script": "scripts/win-updates.ps1"
+      },
+      {
+        "type": "windows-restart",
+        "restart_timeout": "10m",
+        "pause_before": "1m"
       },
       {
         "type": "powershell",
         "elevated_user": "vagrant",
         "elevated_password": "vagrant",
-        "script": "scripts/hotfix-KB3102810.ps1",
+        "script": "scripts/win-updates.ps1",
         "pause_before": "2m"
       },
       {
         "type": "windows-restart",
-        "restart_timeout": "1m",
+        "restart_timeout": "10m",
         "pause_before": "1m"
       },
       {
         "type": "powershell",
         "elevated_user": "vagrant",
         "elevated_password": "vagrant",
-        "script": "scripts/hotfix-KB3020369.ps1",
-        "pause_before": "1m"
-      },
-      {
-        "type": "windows-restart",
-        "restart_timeout": "1m",
-        "pause_before": "1m"
-      },
-      {
-        "type": "powershell",
-        "elevated_user": "vagrant",
-        "elevated_password": "vagrant",
-        "script": "scripts/hotfix-KB3125574.ps1",
-        "pause_before": "1m"
-      },
-      {
-        "type": "windows-restart",
-        "restart_timeout": "10m",
-        "pause_before": "1m"
-      },
-      {
-          "type": "powershell",
-          "elevated_user": "vagrant",
-          "elevated_password": "vagrant",
-          "script": "scripts/win-updates.ps1",
-          "pause_before": "5m"
-      },
-      {
-        "type": "windows-restart",
-        "restart_timeout": "10m",
-        "pause_before": "1m"
-      },
-      {
-          "type": "powershell",
-          "elevated_user": "vagrant",
-          "elevated_password": "vagrant",
-          "script": "scripts/win-updates.ps1",
-          "pause_before": "5m"
+        "script": "scripts/win-updates.ps1",
+        "pause_before": "2m"
       },
       {
         "type": "windows-restart",
