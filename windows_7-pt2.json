@@ -1,0 +1,113 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "{{user `source_path`}}",
+      "headless": "{{ user `headless` }}",
+      "output_directory": "./output-{{user `os_name`}}-{{ user `image_name`}}/",
+      "vm_name": "{{user `os_name`}}-{{ user `image_name`}}",
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "guest_additions_mode": "disable",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "8192"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "4"
+        ]
+      ]
+    }
+  ],
+  "provisioners": [
+      {
+        "type": "powershell",
+        "elevated_user": "vagrant",
+        "elevated_password": "vagrant",
+        "script": "scripts/hotfix-KB976932.ps1"
+      },
+      {
+        "type": "powershell",
+        "elevated_user": "vagrant",
+        "elevated_password": "vagrant",
+        "script": "scripts/hotfix-KB3102810.ps1",
+        "pause_before": "2m"
+      },
+      {
+        "type": "windows-restart",
+        "restart_timeout": "1m",
+        "pause_before": "1m"
+      },
+      {
+        "type": "powershell",
+        "elevated_user": "vagrant",
+        "elevated_password": "vagrant",
+        "script": "scripts/hotfix-KB3020369.ps1",
+        "pause_before": "1m"
+      },
+      {
+        "type": "windows-restart",
+        "restart_timeout": "1m",
+        "pause_before": "1m"
+      },
+      {
+        "type": "powershell",
+        "elevated_user": "vagrant",
+        "elevated_password": "vagrant",
+        "script": "scripts/hotfix-KB3125574.ps1",
+        "pause_before": "1m"
+      },
+      {
+        "type": "windows-restart",
+        "restart_timeout": "10m",
+        "pause_before": "1m"
+      },
+      {
+          "type": "powershell",
+          "elevated_user": "vagrant",
+          "elevated_password": "vagrant",
+          "script": "scripts/win-updates.ps1",
+          "pause_before": "5m"
+      },
+      {
+        "type": "windows-restart",
+        "restart_timeout": "10m",
+        "pause_before": "1m"
+      },
+      {
+          "type": "powershell",
+          "elevated_user": "vagrant",
+          "elevated_password": "vagrant",
+          "script": "scripts/win-updates.ps1",
+          "pause_before": "5m"
+      },
+      {
+        "type": "windows-restart",
+        "restart_timeout": "10m",
+        "pause_before": "1m"
+      }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "{{user `os_name`}}-{{ user `image_name`}}.box",
+      "vagrantfile_template": "vagrantfile-windows_7.template"
+    }
+  ],
+  "variables": {
+    "os_name": "",
+    "headless": "true",
+    "source_path": "",
+    "image_name": "updated"
+  }
+}
