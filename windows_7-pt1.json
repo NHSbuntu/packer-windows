@@ -63,7 +63,7 @@
     {
       "type": "vagrant",
       "keep_input_artifact": true,
-      "output": "windows_7_{{.Provider}}.box",
+      "output": "{{user `os_name`}}-{{ user `image_name`}}.box",
       "vagrantfile_template": "vagrantfile-windows_7.template"
     }
   ],
