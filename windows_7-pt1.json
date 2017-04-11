@@ -22,7 +22,10 @@
       "floppy_files": [
         "{{user `autounattend`}}",
         "./scripts/dis-updates.ps1",
-        "./scripts/oracle-cert.cer"
+        "./scripts/oracle-cert.cer",
+        "./scripts/microsoft-updates.bat",
+        "./scripts/win-updates.ps1",
+        "./scripts/hotfix-KB3102810.bat"
       ],
       "vboxmanage": [
         [

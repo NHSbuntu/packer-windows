@@ -1,0 +1,67 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "vm_name": "{{ user `os_name` }}-{{ user `image_name` }}",
+      "source_path": "{{user `source_path`}}",
+      "output_directory": "./output-{{ user `os_name` }}-{{ user `image_name` }}/",
+      "headless": "{{ user `headless` }}",
+      "communicator": "winrm",
+      "winrm_username": "vagrant",
+      "winrm_password": "vagrant",
+      "winrm_timeout": "12h",
+      "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+      "guest_additions_mode": "disable",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "8192"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "4"
+        ]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+        "elevated_password": "vagrant",
+        "elevated_user": "vagrant",
+        "script": "scripts/clean_and_scrub.ps1",
+        "type": "powershell",
+        "valid_exit_codes": [
+    0,
+    1,
+    2,
+    3,
+    5,
+    10,
+    15
+]
+    },
+    {
+  "type": "windows-restart",
+  "restart_timeout": "10m",
+          "pause_before": "2m"
+}
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": true,
+      "output": "{{user `os_name`}}-{{ user `image_name`}}.box",
+      "vagrantfile_template": "vagrantfile-windows_7.template"
+    }
+  ],
+  "variables": {
+    "headless": "true",
+    "image_name": "clean",
+    "os_name": "",
+    "source_path": ""
+  }
+}
