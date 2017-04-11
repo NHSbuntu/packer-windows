@@ -10,3 +10,5 @@ echo Set NewUpdateService = ServiceManager.AddService2("7971f918-a847-4430-9279-
 cscript A:\temp.vbs
 
 net start wuauserv
+
+exit /b 0
