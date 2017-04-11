@@ -4,6 +4,7 @@
       "type": "virtualbox-ovf",
       "vm_name": "{{ user `os_name` }}-{{ user `image_name` }}",
       "source_path": "{{user `source_path`}}",
+      "keep_registered": "{{user `keep_registered`}}",
       "output_directory": "./output-{{ user `os_name` }}-{{ user `image_name` }}/",
       "headless": "{{ user `headless` }}",
       "communicator": "winrm",
