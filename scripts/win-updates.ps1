@@ -175,7 +175,7 @@ function Check-WindowsUpdates() {
     $script:maxAttempts = 12
     while(-not $script:successful -and $script:attempts -lt $script:maxAttempts) {
         try {
-            $script:SearchResult = $script:UpdateSearcher.Search("IsInstalled=0 and Type='Software' and IsHidden=0")
+            $script:SearchResult = $script:UpdateSearcher.Search("IsInstalled=0 and Type='Software' and IsHidden=0 and BrowseOnly=0 and IsAssigned=1")
             $script:successful = $TRUE
         } catch {
             LogWrite $_.Exception | Format-List -force
