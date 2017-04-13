@@ -12,12 +12,8 @@
         "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
         "guest_additions_mode": "disable",
         "floppy_files": [
-            "./scripts/microsoft-updates.bat",
-            "./scripts/win-updates.ps1",
             "./scripts/hotfix-KB976932.ps1",
-            "./scripts/hotfix-KB3102810.ps1",
-            "./scripts/hotfix-KB3125574.ps1",
-            "./scripts/hotfix-KB3020369.ps1"
+            "./scripts/hotfix-KB3102810.ps1"
         ],
         "vboxmanage": [
             [
@@ -35,9 +31,6 @@
         ]
     }],
     "provisioners": [{
-        "type": "windows-shell",
-        "inline": "cmd.exe /c a:\\microsoft-updates.bat"
-    }, {
         "type": "powershell",
         "elevated_user": "vagrant",
         "elevated_password": "vagrant",
@@ -59,7 +52,17 @@
         "type": "powershell",
         "elevated_user": "vagrant",
         "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\hotfix-KB3125574.ps1"
+        "script": "scripts/win-updates.ps1",
+        "pause_before": "30s",
+        "valid_exit_codes": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            10,
+            15
+        ]
     }, {
         "type": "windows-restart",
         "restart_timeout": "10m",
@@ -68,7 +71,17 @@
         "type": "powershell",
         "elevated_user": "vagrant",
         "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\hotfix-KB3020369.ps1"
+        "script": "scripts/win-updates.ps1",
+        "pause_before": "30s",
+        "valid_exit_codes": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            10,
+            15
+        ]
     }, {
         "type": "windows-restart",
         "restart_timeout": "10m",
@@ -77,82 +90,80 @@
         "type": "powershell",
         "elevated_user": "vagrant",
         "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\win-updates.ps1 -MaxUpdatesPerCycle 20 -RestartRequired 1"
+        "script": "scripts/win-updates.ps1",
+        "pause_before": "30s",
+        "valid_exit_codes": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            10,
+            15
+        ]
     }, {
         "type": "windows-restart",
         "restart_timeout": "10m",
-        "pause_before": "2m"
+        "pause_before": "1m"
     }, {
         "type": "powershell",
         "elevated_user": "vagrant",
         "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\win-updates.ps1 -MaxUpdatesPerCycle 20 -RestartRequired 1",
+        "script": "scripts/win-updates.ps1",
+        "pause_before": "30s",
+        "valid_exit_codes": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            10,
+            15
+        ]
+    }, {
+        "type": "windows-restart",
+        "restart_timeout": "10m",
+        "pause_before": "1m"
+    }, {
+        "type": "powershell",
+        "elevated_user": "vagrant",
+        "elevated_password": "vagrant",
+        "script": "scripts/win-updates.ps1",
+        "pause_before": "30s",
+        "valid_exit_codes": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            10,
+            15
+        ]
+    }, {
+        "type": "windows-restart",
+        "restart_timeout": "10m",
+        "pause_before": "1m"
+    }, {
+        "type": "powershell",
+        "elevated_user": "vagrant",
+        "elevated_password": "vagrant",
+        "script": "scripts/win-updates.ps1",
+        "pause_before": "30s",
+        "valid_exit_codes": [
+            0,
+            1,
+            2,
+            3,
+            5,
+            10,
+            15
+        ]
+    }, {
+        "type": "windows-restart",
+        "restart_timeout": "10m",
         "pause_before": "30s"
-    }, {
-        "type": "windows-restart",
-        "restart_timeout": "10m",
-        "pause_before": "2m"
-    }, {
-        "type": "powershell",
-        "elevated_user": "vagrant",
-        "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\win-updates.ps1 -MaxUpdatesPerCycle 40 -RestartRequired 1",
-        "pause_before": "30s"
-    }, {
-        "type": "windows-restart",
-        "restart_timeout": "10m",
-        "pause_before": "2m"
-    }, {
-        "type": "powershell",
-        "elevated_user": "vagrant",
-        "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\win-updates.ps1 -MaxUpdatesPerCycle 40 -RestartRequired 1",
-        "pause_before": "30s"
-    }, {
-        "type": "windows-restart",
-        "restart_timeout": "10m",
-        "pause_before": "2m"
-    }, {
-        "type": "powershell",
-        "elevated_user": "vagrant",
-        "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\win-updates.ps1 -MaxUpdatesPerCycle 40 -RestartRequired 1",
-        "pause_before": "30s"
-    }, {
-        "type": "windows-restart",
-        "restart_timeout": "10m",
-        "pause_before": "2m"
-    }, {
-        "type": "powershell",
-        "elevated_user": "vagrant",
-        "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\win-updates.ps1 -MaxUpdatesPerCycle 40 -RestartRequired 1",
-        "pause_before": "30s"
-    }, {
-        "type": "windows-restart",
-        "restart_timeout": "10m",
-        "pause_before": "2m"
-    }, {
-        "type": "powershell",
-        "elevated_user": "vagrant",
-        "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\win-updates.ps1 -MaxUpdatesPerCycle 40 -RestartRequired 1",
-        "pause_before": "30s"
-    }, {
-        "type": "windows-restart",
-        "restart_timeout": "10m",
-        "pause_before": "2m"
-    }, {
-        "type": "powershell",
-        "elevated_user": "vagrant",
-        "elevated_password": "vagrant",
-        "inline": "cmd.exe /c C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe -File a:\\win-updates.ps1 -MaxUpdatesPerCycle 40 -RestartRequired 1",
-        "pause_before": "30s"
-    }, {
-        "type": "windows-restart",
-        "restart_timeout": "10m",
-        "pause_before": "2m"
-    }],
+    }
+  ],
     "post-processors": [{
         "type": "vagrant",
         "keep_input_artifact": true,
