@@ -44,7 +44,11 @@
       "ssh_wait_timeout": "8h",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "guest_os_type": "Windows7_64",
-      "disk_size": 61440,
+      "disk_size": 40000,
+      "format": "ova",
+      "hard_drive_nonrotational": true,
+      "hard_drive_Discard": true,
+      "guest_additions_mode": "attach",
       "floppy_files": [
         "{{user `autounattend`}}",
         "./scripts/dis-updates.ps1",
@@ -114,16 +118,24 @@
       ]
     }
   ],
-  "provisioners": [
+  "provisioners": [{
+      "type": "powershell",
+      "script": "scripts/install_oracle_guest_additions.ps1",
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant",
+      "environment_vars": [
+          "install_vbox_tools=true"
+      ]
+  },
     {
       "type": "shell",
       "remote_path": "/tmp/script.bat",
       "execute_command": "{{.Vars}} cmd /c C:/Windows/Temp/script.bat",
       "scripts": [
-        "./scripts/vm-guest-tools.bat",
         "./scripts/vagrant-ssh.bat",
         "./scripts/disable-auto-logon.bat",
         "./scripts/enable-rdp.bat",
+        "./scripts/disable-rdp-allow-list.bat",
         "./scripts/compile-dotnet-assemblies.bat",
         "./scripts/compact.bat"
       ]

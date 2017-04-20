@@ -1,9 +1,9 @@
 param($global:RestartRequired=0,
         $global:MoreUpdates=0,
-        $global:MaxCycles=5,
+        $global:MaxCycles=10,
         $MaxUpdatesPerCycle=500)
 
-$Logfile = "C:\Windows\Temp\win-updates.log"
+$Logfile = "C:\Windows\packer-win-updates.log"
 
 function LogWrite {
    Param ([string]$logstring)
