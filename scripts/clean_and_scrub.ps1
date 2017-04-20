@@ -4,15 +4,15 @@ Remove-Item c:\Windows\SoftwareDistribution\Download\* -Recurse -Force
 Start-Service -Name wuauserv
 
 #Write-Host "Cleaning SxS..."
-#Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
+Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
 @(
     "$env:localappdata\Nuget",
     "$env:localappdata\temp\*",
-    "$env:windir\logs",
+    "$env:windir\Logs\*",
     "$env:windir\panther",
-    "$env:windir\temp\*",
-    "$env:windir\winsxs\manifestcache"
+    "$env:windir\Temp\*",
+    "$env:windir\winsxs\ManifestCache\*"
 ) | % {
         if(Test-Path $_) {
             Write-Host "Removing $_"
