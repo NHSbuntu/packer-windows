@@ -1,4 +1,4 @@
-# Install KB
+# Install Windows 7 Service Pack 1
 $nhsbKbName = "Windows 7 Service Pack 1"
 $nhsbKbUrl = "https://download.microsoft.com/download/0/A/F/0AFB5316-3062-494A-AB78-7FB0D4461357/windows6.1-KB976932-X64.exe"
 $nhsbKbExe = Join-Path "$($env:windir)\Temp" 'nhsb-windows6.1-kb976932.exe'
