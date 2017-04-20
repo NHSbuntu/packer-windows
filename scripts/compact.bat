@@ -29,4 +29,9 @@ net start wuauserv
 cmd /c C:\Windows\Temp\ultradefrag-portable-6.1.0.amd64\udefrag.exe --optimize --repeat C:
 
 cmd /c %SystemRoot%\System32\reg.exe ADD HKCU\Software\Sysinternals\SDelete /v EulaAccepted /t REG_DWORD /d 1 /f
-cmd /c C:\Windows\Temp\sdelete.exe -q -z C:
+cmd /c C:\Windows\Temp\sdelete64.exe -q -z C:
+
+wmic computersystem set AutomaticManagedPagefile=False
+wmic pagefileset where name="%SystemDrive%\\pagefile.sys" set InitialSize=1024,MaximumSize=1024
+
+exit /b 0
