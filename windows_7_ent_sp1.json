@@ -12,16 +12,24 @@
       "winrm_password": "vagrant",
       "winrm_timeout": "12h",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "Windows7_64",
+      "guest_os_type": "{{user `guest_os_type`}}",
       "disk_size": 40000,
       "hard_drive_nonrotational": true,
       "hard_drive_Discard": true,
       "guest_additions_mode": "attach",
       "floppy_files": [
+        "./answer_files/7-ent-sp1/{{user `autounattend`}}/Autounattend.xml",
         "./scripts/dis-updates.ps1",
         "./scripts/microsoft-updates.bat",
         "./scripts/win-updates.ps1",
-        "./answer_files/7-ent-sp1/*"
+        "./answer_files/7-ent-sp1/configure.bat",
+        "./answer_files/7-ent-sp1/firewall-disable.bat",
+        "./answer_files/7-ent-sp1/fixnetwork.ps1",
+        "./answer_files/7-ent-sp1/hotfix-KB3020369.ps1",
+        "./answer_files/7-ent-sp1/hotfix-KB3102810.ps1",
+        "./answer_files/7-ent-sp1/hotfix-KB3125574.ps1",
+        "./answer_files/7-ent-sp1/install-winrm.cmd",
+        "./answer_files/7-ent-sp1/zz-start-sshd.cmd"
       ],
       "vboxmanage": [
         [
@@ -70,7 +78,7 @@
             15
         ]
     }, {
-        "script": "scripts/compact.bat",
+        "script": "scripts/{{user `compact`}}",
         "type": "windows-shell"
     },
     {
@@ -91,6 +99,9 @@
     "iso_url": "http://care.dlservice.microsoft.com/dl/download/evalx/win7/x64/EN/7600.16385.090713-1255_x64fre_enterprise_en-us_EVAL_Eval_Enterprise-GRMCENXEVAL_EN_DVD.iso",
     "iso_checksum_type": "md5",
     "iso_checksum": "1d0d239a252cb53e466d39e752b17c28",
-    "autounattend": "./answer_files/7-ent-sp1/Autounattend.xml"
+    "autounattend": "./answer_files/7-ent-sp1/Autounattend.xml",
+    "guest_os_type": "Windows7_64",
+    "autounattend": "amd64",
+    "compact": "compact.bat"
   }
 }
