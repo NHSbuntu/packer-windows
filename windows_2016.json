@@ -5,15 +5,15 @@
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": "{{user `headless`}}",
+      "headless": true,
       "boot_wait": "2m",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
-      "ssh_wait_timeout": "8h",
+      "ssh_wait_timeout": "6h",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "windows7srv-64",
+      "guest_os_type": "windows8srv-64",
       "tools_upload_flavor": "windows",
-      "disk_size": "{{user `disk_size`}}",
+      "disk_size": 61440,
       "vnc_port_min": 5900,
       "vnc_port_max": 5980,
       "floppy_files": [
@@ -25,8 +25,8 @@
       "vmx_data": {
         "RemoteDisplay.vnc.enabled": "false",
         "RemoteDisplay.vnc.port": "5900",
-        "memsize": "{{user `memory_size`}}",
-        "numvcpus": "{{user `cpus`}}",
+        "memsize": "2048",
+        "numvcpus": "2",
         "scsi0.virtualDev": "lsisas1068"
       }
     },
@@ -35,14 +35,14 @@
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "headless": "{{user `headless`}}",
+      "headless": true,
       "boot_wait": "2m",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
-      "ssh_wait_timeout": "8h",
+      "ssh_wait_timeout": "6h",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "Windows2008_64",
-      "disk_size": "{{user `disk_size`}}",
+      "guest_os_type": "Windows2016_64",
+      "disk_size": 61440,
       "floppy_files": [
         "{{user `autounattend`}}",
         "./scripts/microsoft-updates.bat",
@@ -55,13 +55,13 @@
           "modifyvm",
           "{{.Name}}",
           "--memory",
-          "{{user `memory_size`}}"
+          "2048"
         ],
         [
           "modifyvm",
           "{{.Name}}",
           "--cpus",
-          "{{user `cpus`}}"
+          "2"
         ]
       ]
     },
@@ -73,11 +73,11 @@
       "boot_wait": "2m",
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
-      "ssh_wait_timeout": "2h",
+      "ssh_wait_timeout": "6h",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
-      "guest_os_type": "win-2008",
+      "guest_os_type": "win-2016",
       "parallels_tools_flavor": "win",
-      "disk_size": "{{user `disk_size`}}",
+      "disk_size": 61440,
       "floppy_files": [
         "{{user `autounattend`}}",
         "./scripts/microsoft-updates.bat",
@@ -88,11 +88,11 @@
       "prlctl": [
         [
           "set", "{{.Name}}",
-          "--memsize", "{{user `memory_size`}}"
+          "--memsize", "2048"
         ],
         [
           "set", "{{.Name}}",
-          "--cpus", "{{user `cpus`}}"
+          "--cpus", "2"
         ],
         [
           "set", "{{.Name}}",
@@ -117,8 +117,9 @@
       "scripts": [
         "./scripts/vm-guest-tools.bat",
         "./scripts/vagrant-ssh.bat",
-        "./scripts/disable-auto-logon.bat",
         "./scripts/enable-rdp.bat",
+        "./scripts/compile-dotnet-assemblies.bat",
+        "./scripts/disable-auto-logon.bat",
         "./scripts/compact.bat"
       ]
     }
@@ -127,18 +128,14 @@
     {
       "type": "vagrant",
       "keep_input_artifact": false,
-      "output": "windows_2008_r2_{{.Provider}}.box",
-      "vagrantfile_template": "vagrantfile-windows_2008_r2.template"
+      "output": "windows_2016_{{.Provider}}.box",
+      "vagrantfile_template": "vagrantfile-windows_2016.template"
     }
   ],
   "variables": {
-    "iso_url": "http://download.microsoft.com/download/7/5/E/75EC4E54-5B02-42D6-8879-D8D3A25FBEF7/7601.17514.101119-1850_x64fre_server_eval_en-us-GRMSXEVAL_EN_DVD.iso",
+    "iso_url": "http://care.dlservice.microsoft.com/dl/download/1/4/9/149D5452-9B29-4274-B6B3-5361DBDA30BC/14393.0.161119-1705.RS1_REFRESH_SERVER_EVAL_X64FRE_EN-US.ISO",
     "iso_checksum_type": "md5",
-    "iso_checksum": "4263be2cf3c59177c45085c0a7bc6ca5",
-    "autounattend": "./answer_files/2008_r2/Autounattend.xml",
-    "headless": "true",
-    "cpus": "2",
-    "memory_size": "2048",
-    "disk_size": "61440"
+    "iso_checksum": "70721288bbcdfe3239d8f8c0fae55f1f",
+    "autounattend": "./answer_files/2016/Autounattend.xml"
   }
 }
